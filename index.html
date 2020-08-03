@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ting's Tab-Game</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .x{
+            display: none!important;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+        }
+        #start{
+            width: 100%;
+            height: 100vh;
+            background-color: rgb(156,224,224);
+            display: flex;
+            position: absolute;
+            z-index: 4;
+            top: 0px;
+        }
+        .wrap{
+            width: 50%;
+            margin: auto;  
+            text-align: center;
+            color: white; 
+        }
+        .wrap h1{
+            font-size: 28px;
+            margin: 15px;
+        }
+        .wrap div {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        #btn-start, #btn-about {
+            display: inline;
+            cursor: pointer;
+            border-bottom: white 2px dashed;
+        }
+        .icon {
+            width: 5%;
+            margin: 5px 2px 0px 2px;
+            position: relative;
+            z-index: 0;
+        }
+        #btn-back{
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            z-index: 5;
+            cursor: pointer;
+            color: white;
+        }
+        #btn-full-screen{
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            z-index: 5;
+            cursor: pointer;
+            color: white;
+        }
+        #about{
+            width: 100%;
+            height: 100vh;
+            background-color: rgb(216,250,250);
+            position: absolute;
+            top: 0px; 
+            display: flex;
+        }
+        .about-background{
+            margin: auto;  
+            text-align: center;
+            width: 640px;
+            height: 350px;
+            position: absolute;
+            z-index: 4;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: rgb(136,204,205);
+        }
+        .about-text{
+            text-align: center;
+            color: white;
+        }
+        #about-x{
+            margin: 45px 0px 45px 0px;
+            font-size: 20px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        #about-x:hover{
+            animation-name: flash;
+            animation-duration: .2s;
+        }
+        @keyframes flash{
+            0%{
+                color: white;
+            }
+            40%{
+                color: rgb(136,204,205);
+            }
+            60%{
+                color: rgb(136,204,205);
+            }
+            100%{
+                color: white;
+            }
+        }
+        .about-text p{
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .about-text p span{
+            border-bottom: 1px dashed white;
+        }
+        .about-text p span:hover{
+            animation-name: flash;
+            animation-duration: .2s;
+        }
+        a{
+            text-decoration: none;
+            color: white;
+            border-bottom: 1px dashed white;
+        }
+        a:hover{
+            animation-name: flash;
+            animation-duration: .2s;
+        }
+        #control-table{
+            position: absolute;
+            width: 50%;
+            height: 30%;
+            text-align: center;
+            margin: auto;
+            top: 0px;
+            bottom: 0px;
+            right: 0px;
+            left: 0px;
+            z-index: 10;
+        }
+        #control-table div p {
+            display: inline-block;
+            margin: 15px 0px 15px 0px;
+            color: white;
+            font-size: 20px;
+        }
+        .control-btn{
+            border-bottom: dashed;
+            cursor: pointer;
+        }
+
+        .control-btn:hover{
+            animation-name: flash;
+            animation-duration: .2s;
+        }
+        .game-table {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-wrap: wrap;
+            position: absolute;
+            background-color: transparent;
+            top: 0%;
+        }
+        .box {
+            width: 12.5%;
+            height: 25vh;
+            box-sizing: border-box;
+            flex-grow: 1;
+        }
+        .box-active {
+            animation-name: flash; 
+            animation-duration: 0.5s
+        }
+        @keyframes flash {
+            0%{
+                background-color: rgb(255, 255, 255);
+                opacity: 0.7;
+            }
+            100%{
+                background-color: rgb(255, 255, 255);
+                opacity: 0;
+            }
+        }
+        audio {
+            display: none;
+        }
+
+        #cvs{
+            width: 100%;
+            height: 100vh;
+            box-sizing: border-box;
+            background-color: rgb(136,204,205);
+            position: absolute;
+            top: 0px;
+            z-index: -1;
+            
+        }
+
+    </style>
+</head>
+<body>
+    <div id="btn-back"> back to start </div>
+    <div id="btn-full-screen">full-screen</div>
+    <div id="start">
+        <div class="wrap">
+            <h1>Fake Mikutap</h1>
+            <div><span id="btn-start">START</span></div>
+            <div><span id="btn-about">ABOUT</span></div>
+            <div><P>* Raise the volume and enjoy !</P></div>
+            <div>
+            <p>SHARE:</p>
+                <div>
+                    <a href="#"><img class="icon" src="https://aidn.jp/shared/img/sns/twitter_w.png" alt=""></a>
+                    <a href="#"><img class="icon" src="https://aidn.jp/shared/img/sns/facebook_w.png" alt=""></a>
+                    <a href="#"><img class="icon" src="https://aidn.jp/shared/img/sns/google_w.png" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x" id="about">
+        <div class="about-background">
+            <div class="about-text">
+                <div id="about-x">X</div>
+                <p>Voiced by <span>Hatsune Miku</span></p>
+                <p>Created by <span>Ting  </span>( <span><a href="https://www.facebook.com/profile.php?id=100000133118763">Facebook</a></span> )</p>
+                <p>Inspired by <a href="">Patatap</a>, Mimic from <a href="https://aidn.jp/mikutap/">Mikutap</a></p>
+                <p>( Wonderful website! )</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-table x" id="game-table">
+        <div class="x" id="control-table">
+            <div><p>CLICK & DRAG or PRESS ANY KEY!</p></div>
+            <div><P class="control-btn" id="feedback-btn">FEEDBACK : <span id="feedback-sign">ON</span></P></div>
+            <div><P class="control-btn" id="backtrack-btn">BACKTRACK : <span id="backtrack-sign">ON</span></P></div>
+        </div>
+        <audio id="game-background-music" src="/tag-game mp3/bc.mp3" controls loop></audio>
+        <div class="box" id="box1">  <audio controls src="/tag-game mp3/1.mp3" id="1"  ></audio></div>
+        <div class="box" id="box2">  <audio controls src="/tag-game mp3/2.mp3" id="2"  ></audio></div>
+        <div class="box" id="box3">  <audio controls src="/tag-game mp3/3.mp3" id="3"  ></audio></div>
+        <div class="box" id="box4">  <audio controls src="/tag-game mp3/4.mp3" id="4"  ></audio></div>
+        <div class="box" id="box5">  <audio controls src="/tag-game mp3/5.mp3" id="5"  ></audio></div>
+        <div class="box" id="box6">  <audio controls src="/tag-game mp3/6.mp3" id="6"  ></audio></div>
+        <div class="box" id="box7">  <audio controls src="/tag-game mp3/7.mp3" id="7"  ></audio></div>
+        <div class="box" id="box8">  <audio controls src="/tag-game mp3/8.mp3" id="8"  ></audio></div>
+        <div class="box" id="box9">  <audio controls src="/tag-game mp3/9.mp3" id="9"  ></audio></div>
+        <div class="box" id="box10"><audio controls src="/tag-game mp3/10.mp3" id="10" ></audio></div>
+        <div class="box" id="box11"><audio controls src="/tag-game mp3/11.mp3" id="11" ></audio></div>
+        <div class="box" id="box12"><audio controls src="/tag-game mp3/12.mp3" id="12" ></audio></div>
+        <div class="box" id="box13"><audio controls src="/tag-game mp3/13.mp3" id="13" ></audio></div>
+        <div class="box" id="box14"><audio controls src="/tag-game mp3/14.mp3" id="14" ></audio></div>
+        <div class="box" id="box15"><audio controls src="/tag-game mp3/15.mp3" id="15" ></audio></div>
+        <div class="box" id="box16"><audio controls src="/tag-game mp3/16.mp3" id="16" ></audio></div>
+        <div class="box" id="box17"><audio controls src="/tag-game mp3/17.mp3" id="17" ></audio></div>
+        <div class="box" id="box18"><audio controls src="/tag-game mp3/18.mp3" id="18" ></audio></div>
+        <div class="box" id="box19"><audio controls src="/tag-game mp3/19.mp3" id="19" ></audio></div>
+        <div class="box" id="box20"><audio controls src="/tag-game mp3/20.mp3" id="20" ></audio></div>
+        <div class="box" id="box21"><audio controls src="/tag-game mp3/21.mp3" id="21" ></audio></div>
+        <div class="box" id="box22"><audio controls src="/tag-game mp3/22.mp3" id="22" ></audio></div>
+        <div class="box" id="box23"><audio controls src="/tag-game mp3/23.mp3" id="23" ></audio></div>
+        <div class="box" id="box24"><audio controls src="/tag-game mp3/24.mp3" id="24" ></audio></div>
+        <div class="box" id="box25"><audio controls src="/tag-game mp3/25.mp3" id="25" ></audio></div>
+        <div class="box" id="box26"><audio controls src="/tag-game mp3/26.mp3" id="26" ></audio></div>
+        <div class="box" id="box27"><audio controls src="/tag-game mp3/27.mp3" id="27" ></audio></div>
+        <div class="box" id="box28"><audio controls src="/tag-game mp3/28.mp3" id="28" ></audio></div>
+        <div class="box" id="box29"><audio controls src="/tag-game mp3/29.mp3" id="29" ></audio></div>
+        <div class="box" id="box30"><audio controls src="/tag-game mp3/30.mp3" id="30" ></audio></div>
+        <div class="box" id="box31"><audio controls src="/tag-game mp3/31.mp3" id="31" ></audio></div>
+        <div class="box" id="box32"><audio controls src="/tag-game mp3/32.mp3" id="32" ></audio></div>
+    </div>
+    <canvas id="cvs" width="1440" height="720"></canvas>
+
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+                        // var area
+        var full_screen_btn = document.querySelector('#btn-full-screen')
+        var back_btn = document.querySelector('#btn-back')
+        var start_btn = document.querySelector('#btn-start')
+        var start_view = document.querySelector('#start')
+        var game_view = document.querySelector('#game-table')
+        var bgm = document.querySelector('#game-background-music')
+        var about_btn = document.querySelector('#btn-about')
+        var about_view = document.querySelector('#about')
+        var about_x = document.querySelector('#about-x')
+        var control_table = document.querySelector('#control-table')
+        var backtrack_btn = document.querySelector('#backtrack-btn')
+        var backtrack_sign= document.querySelector('#backtrack-sign')   
+        var feedback_btn= document.querySelector('#feedback-btn')
+        var feedback_sign= document.querySelector('#feedback-sign')     
+        var box_x = (document.body.clientWidth / 8);
+        var box_y = (document.body.clientHeight / 4);
+        var isDown = false;
+        var activeTime = 0;
+        var timeToChange = 10;
+        var isStart = false
+        var doNotThingTime = 0
+        var press_effect = true
+        var bgm_played = true
+                        // var area
+
+                        // full-screen btn
+        full_screen_btn.onmousedown = function () { 
+            event.stopPropagation()
+            if (document.fullscreenElement) { 
+                document.exitFullscreen()
+            } else { 
+                document.documentElement.requestFullscreen() 
+            } 
+        };                 
+                        // full-screen btn
+                        
+                        //  back btn
+        back_btn.addEventListener('mousedown', function(){
+            event.stopPropagation()
+            bgm.pause();
+            start_view.classList.remove('x');
+            game_view.classList.add('x');
+            control_table.classList.add('x')
+            isStart = false
+        });                 
+                        //  back btn
+                        
+                        // start btn
+        start_btn.addEventListener('mousedown', function(){
+            event.stopPropagation()
+            isStart = true
+            start_view.classList.add('x');
+            game_view.classList.remove('x');
+            control_table.classList.remove('x');
+            bgm.play();
+        });
+                        // start btn
+
+                        // about btn
+        about_btn.addEventListener('mousedown', function(){
+            event.stopPropagation()
+            about_view.classList.remove('x');
+            start_view.classList.add('x');
+        });
+                        // about btn
+
+                        // about back to start btn
+        about_x.addEventListener('mousedown', function(){ 
+            event.stopPropagation()
+            about_view.classList.add('x');
+            start_view.classList.remove('x');
+        });
+                        // about back to start btn 
+
+                        // game mousedown music
+        document.addEventListener('mousedown',function(event){
+            event.preventDefault
+            if (isStart){
+                var number =  Math.floor(event.pageX/ box_x + 1 ) + Math.floor(event.pageY / box_y)*8;
+                document.getElementById(String(number)).play();
+                // console.log(String(number))
+                cube_animation(2,0.2)
+                if (press_effect){
+                    document.getElementById('box'+String(number)).classList.add('box-active');
+                    
+                }
+            }
+        }); 
+                    // game mousedown music            
+
+                    // window resize problem
+        window.addEventListener('resize',function(event){
+            box_x = (document.body.clientWidth / 8);
+            box_y = (document.body.clientHeight / 4);
+        }); 
+                    // window resize problem
+
+                    // mouse press check    
+        document.addEventListener('mousedown',function(){
+            isDown = true;
+            activeTime = activeTime + 1;
+        });
+                      
+        document.addEventListener('mouseup',function(){
+            isDown = false
+        });
+                    // mouse press check 
+
+                    // mouse up remove box-active class
+        document.addEventListener('mouseup',function(event){
+            var number =  Math.floor(event.pageX/ box_x + 1 ) + Math.floor(event.pageY / box_y)*8
+            document.getElementById('box'+String(number)).classList.remove('box-active');
+        });
+                    // mouse up remove box-active class
+
+                    // mouseover under mouse pressed
+        document.addEventListener('mouseover',function(event){
+            if (isDown) {
+                activeTime = activeTime + 1;
+                doNotThingTime = 0;
+                var number =  Math.floor(event.pageX/ box_x + 1 ) + Math.floor(event.pageY / box_y)*8;
+                document.getElementById(String(number)).play();
+                // cube_animation(2,0.2)
+                if (press_effect){
+                    document.getElementById('box'+String(number)).classList.add('box-active');
+                    
+                }
+                            // remove class-box-active  from acticed box
+                document.getElementById('box'+String(number+1)).classList.remove('box-active');
+                document.getElementById('box'+String(number-1)).classList.remove('box-active');
+                document.getElementById('box'+String(number+8)).classList.remove('box-active');
+                document.getElementById('box'+String(number-8)).classList.remove('box-active'); 
+                            // remove class-box-active  from actived box
+            }
+        });  
+        
+                            // mouseover under mouse pressed
+
+                            // game-view background color change
+        document.addEventListener('mousedown',function(event){
+            if ( isDown & activeTime % timeToChange == 0 ){
+                var r = Math.floor( ( Math.random()*100 ) % 256 );
+                var g = Math.floor( ( Math.random()*100 ) % 256 );
+                var b = Math.floor( ( Math.random()*100 ) % 256 );
+                document.getElementById('cvs').style.backgroundColor = 'rgb(' + r + ', ' + g + ', ' + b + ')'
+            }               
+        })
+                            // game-view background color change
+
+                            // do not thing time counter
+        document.addEventListener('mousedown',function(){
+            if (isStart){
+                control_table.classList.add('x')
+            }
+        });
+        function timeCounter(){
+            if (isStart){
+                doNotThingTime = doNotThingTime +1
+                if (doNotThingTime > 2 ){
+                control_table.classList.remove('x');
+                doNotThingTime = 0;
+                }
+            }
+        };
+        setInterval(timeCounter,1000)
+                            // do not thing time counter
+        
+                            // BGM control
+        
+        // var x = 0
+        // backtrack_btn.addEventListener('mousedown', function(event){
+        //     event.stopPropagation()
+        //     if ( !bgm.paused ){     
+        //         console.log(x)
+        //         bgm.pause()
+        //         backtrack_sign.textContent = "OFF"
+        //         x = x + 1
+        //     }else{
+        //         bgm.play()
+        //         backtrack_sign.textContent = "ON"
+        //     }
+        // });
+        backtrack_btn.addEventListener('mousedown', function(event){
+            event.stopPropagation()
+            if ( bgm_played ){
+                bgm.pause()
+                backtrack_sign.textContent = "OFF"
+                bgm_played = false
+            }else{
+                bgm.play()
+                backtrack_sign.textContent = "ON"
+                bgm_played = true
+            }
+        });
+                            // BGM control
+
+                            // press effect control
+        feedback_btn.addEventListener('mousedown', function(event){
+            event.stopPropagation()
+            if ( press_effect ){
+                press_effect = false
+                feedback_sign.textContent = "OFF"
+            }else{
+                press_effect = true
+                feedback_sign.textContent = "ON"
+            }
+        });
+                            // press effect control
+        
+                // var area
+        var cvs = document.getElementById('cvs');
+                // var area
+
+                // canvas auto-resize
+        window.addEventListener('resize',function(e){
+            console.log(1)
+            cvs.setAttribute('width', document.body.clientWidth);
+            cvs.setAttribute('height', document.body.clientHeight);
+        });
+                // canvas的width height 隨著視窗縮放更動   
+
+        function getRandom(min,max){
+            return Math.floor(Math.random()*max ) + min;
+        }
+        // cube animation
+        // draw random cube
+        function draw(){
+            var ctx = cvs.getContext("2d");
+            var cube_num = getRandom(10,50);
+            console.log(cube_num)
+            ctx.clearRect(0,0,1440,720)
+            for(var i = 0; i <= cube_num; i++){
+                var r = getRandom(0,255)
+                var g = getRandom(0,255)
+                var b = getRandom(0,255)
+                var x_axis = getRandom(0,1440)
+                var y_axis = getRandom(0,720)
+                var cube_size = getRandom(10,150)
+                ctx.fillStyle = 'rgb('+r+','+g+','+b+')';
+                ctx.fillRect (x_axis, y_axis, cube_size, cube_size); 
+            }    
+        }
+        // draw random cube
+
+        // clean screen
+        function clear(){
+            var ctx = cvs.getContext("2d");
+            ctx.clearRect(0,0,1440,720);
+        }
+        // clean screen
+        
+        // cube animation control
+        function cube_animation(totalTime,timeToChange){
+            for (i = 1; i < (totalTime/timeToChange); i++ ){
+                setTimeout(draw,timeToChange*1000*i)
+            }    
+            setTimeout(clear,(totalTime*1000+100))
+        }
+
+        // cube animation 
+        
+    </script>
+</body>
+</html>
