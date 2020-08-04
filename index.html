@@ -516,7 +516,7 @@
         // draw random cube
         function draw(){
             var ctx = cvs.getContext("2d");
-            var cube_num = getRandom(10,50);
+            var cube_num = getRandom(1,10);
             console.log(cube_num)
             ctx.clearRect(0,0,1440,720)
             for(var i = 0; i <= cube_num; i++){
@@ -527,7 +527,7 @@
                 var y_axis = getRandom(0,720)
                 var cube_size = getRandom(10,150)
                 ctx.fillStyle = 'rgb('+r+','+g+','+b+')';
-                ctx.fillRect (x_axis, y_axis, cube_size, cube_size); 
+                ctx.fillRect (x_axis, y_axis, 50, 50); 
             }    
         }
         // draw random cube
